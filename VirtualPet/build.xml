@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="VirtualPet" default="run" basedir=".">
+    <property name="src.dir" value="src/main/java" />
+    <property name="build.dir" value="build" />
+    <property name="classes.dir" value="${build.dir}/classes" />
+
+    <target name="clean">
+        <delete dir="${build.dir}" />
+    </target>
+
+    <target name="compile" depends="clean">
+        <mkdir dir="${classes.dir}" />
+        <javac
+            srcdir="${src.dir}"
+            destdir="${classes.dir}"
+            includeantruntime="false" />
+    </target>
+
+    <target name="run" depends="compile">
+        <java classname="main.java.Main" classpath="${classes.dir}" />
+    </target>
+</project>
