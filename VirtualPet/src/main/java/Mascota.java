@@ -1,12 +1,12 @@
 package main.java;
 
-public class Pet {
+public abstract class Mascota {
     private String name;
     private int age;
     private int hunger;
     private int happiness;
 
-    public Pet(String name, int age) {
+    public Mascota(String name, int age) {
         this.name = name;
         this.age = age;
         this.hunger = 50;
