@@ -1,6 +1,7 @@
 package main.java;
 
 public abstract class Mascota {
+    
     private String name;
     private int age;
     private int hunger;
