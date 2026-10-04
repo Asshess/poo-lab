@@ -2,10 +2,10 @@ package main.java;
 
 public abstract class Mascota {
     
-    private String name;
-    private int age;
-    private int hunger;
-    private int happiness;
+    protected String name;
+    protected int age;
+    protected int hunger;
+    protected int happiness;
 
     public Mascota(String name, int age) {
         this.name = name;

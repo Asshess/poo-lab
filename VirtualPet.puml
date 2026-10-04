@@ -27,6 +27,8 @@ enum TipoElemento {
 class Pokemon{
     ' -- Atributos especiales
     - tipo: TipoElemento
+    - puntosPoder: int
+    - nivelEvolucion: int
 
     ' -- Constructor
     + Pokemon(nombre: String, edad: int, tipo: TipoElemento)
