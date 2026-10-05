@@ -38,74 +38,112 @@ public class Pokemon extends Mascota {
         this.nivelEvolucion = nivelEvolucion;
     }
 
-    public void alimentar(int cantidadBayas){
-        hunger = Math.max(0, hunger - (8 * cantidadBayas));
-        happiness = Math.min(100, happiness + (4 * cantidadBayas));
-        System.out.println("Pikachu consumió " + cantidadBayas + " bayas Arandano.");
+    @Override
+    public String alimentar(int cantidadBayas){
+        cantidadBayas = Math.max(0, cantidadBayas);
+        hunger = (int) Math.max(0L, hunger - 8L * cantidadBayas);
+        happiness = (int) Math.min(100L, happiness + 4L * cantidadBayas);
+        String mensaje = name + " consumió " + cantidadBayas + " bayas Arándano.";
+        System.out.println(mensaje);
+        return mensaje;
     }
 
-    public void atacarEspecial(){
+    @Override
+    public String atacarEspecial(){
         hunger = Math.min(100, hunger + 20);
 
+        String mensajeAtaque;
         switch(this.tipo) {
             case FUEGO:
-                System.out.println(name + " usa Lanzallamas!");
+                mensajeAtaque = name + " usa Lanzallamas!";
                 break;
             case AGUA:
-                System.out.println(name + " usa Chorro!");
+                mensajeAtaque = name + " usa Chorro!";
                 break;
             case ELECTRICO:
-                System.out.println(name + " usa Impactrueno!");
+                mensajeAtaque = name + " usa Impactrueno!";
                 break;
             case TIERRA:
-                System.out.println(name + " usa Terremoto!");
+                mensajeAtaque = name + " usa Terremoto!";
+                break;
+            default:
+                mensajeAtaque = name + " realiza un ataque especial.";
                 break;
         }
 
         int numeroAleatorio = (int) (Math.random() * 100) + 1;
+        String resultadoAtaque;
         if (numeroAleatorio <= 50) {
             happiness = Math.min(100, happiness + 30);
-            System.out.println("Ataque exitoso! Felicidad: " + happiness);
+            resultadoAtaque = "Ataque exitoso! Felicidad: " + happiness;
         } else {
             happiness = Math.max(0, happiness - 10);
-            System.out.println("El ataque falló. Felicidad: " + happiness);
+            resultadoAtaque = "El ataque falló. Felicidad: " + happiness;
         }
 
+        String mensaje = mensajeAtaque + " " + resultadoAtaque;
+        System.out.println(mensaje);
+        return mensaje;
     }
 
-    public void expresarEmocion(){
-        happiness = happiness - 15;
+    @Override
+    public String expresarEmocion(){
+        happiness = Math.max(0, happiness - 15);
+        String mensaje;
         switch(this.tipo) {
             case FUEGO:
-                System.out.println(name + " Esta mas rojo de lo normal. Estara molesto?");
+                mensaje = name + " está más rojo de lo normal. ¿Estará molesto?";
                 break;
             case AGUA:
-                System.out.println(name + " Usa chorro (y tu eres el objetivo)");
+                mensaje = name + " usa chorro (y tú eres el objetivo).";
                 break;
             case ELECTRICO:
-                System.out.println(name + " esta molesto y emite chispas");
+                mensaje = name + " está molesto y emite chispas.";
                 break;
             case TIERRA:
-                System.out.println(name + " hace temblar la tierra");
+                mensaje = name + " hace temblar la tierra.";
+                break;
+            default:
+                mensaje = name + " expresa su emoción.";
                 break;
         }
+        System.out.println(mensaje);
+        return mensaje;
     }
-    
-    public void hacerTruco(){
+
+    @Override
+    public String dormir(){
+        hunger = Math.min(100, hunger + 10);
+        happiness = Math.min(100, happiness + 25);
+        String mensaje = name + " se acurruca a descansar... 😴";
+        System.out.println(mensaje);
+        return mensaje;
+    }
+
+    @Override
+    public String hacerTruco(){
+        hunger = Math.min(100, hunger + 15);
+        happiness = Math.min(100, happiness + 20);
+        String mensaje;
         switch(this.tipo) {
             case FUEGO:
-                System.out.println(name + " Saca dos cigarros y los enciende *te ofrece uno*");
+                mensaje = name + " hace una pirueta y lanza chispas.";
                 break;
             case AGUA:
-                System.out.println(name + " hace un chorro");
+                mensaje = name + " hace un chorro de agua.";
                 break;
             case ELECTRICO:
-                System.out.println(name + " hace un rayo");
+                mensaje = name + " hace un rayo.";
                 break;
             case TIERRA:
-                System.out.println(name + " se revuelca en la tierra");
+                mensaje = name + " se revuelca en la tierra.";
+                break;
+            default:
+                mensaje = name + " realiza un truco.";
                 break;
         }
+        System.out.println(mensaje);
+        return mensaje;
     }
 
 }

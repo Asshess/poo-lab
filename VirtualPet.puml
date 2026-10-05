@@ -1,20 +1,38 @@
 @startuml VirtualPet
 
-abstract class Mascota{
-    ' -- Atributos
-    # nombre: String
-    # edad: int 
-    # hambre: int
-    # felicidad: int
-    
+abstract class Mascota {
+    # name: String
+    # age: int
+    # hunger: int
+    # happiness: int
+
     ' -- Constructor
-    + Mascota(nombre: String, edad: int)
+    + Mascota(name: String, age: int)
 
     ' -- Metodos
-    + {abstract} atacarEspecial(): void
-    + {abstract} expresarEmocion(): void
-    + dormir(): void
-    + {abstract} hacerTruco(): void
+    + alimentar(): String
+    + {abstract} alimentar(cantidadBayas: int): String
+    + {abstract} atacarEspecial(): String
+    + {abstract} expresarEmocion(): String
+    + {abstract} dormir(): String
+    + {abstract} hacerTruco(): String
+    + jugar(): void
+}
+
+class Pokemon {
+    - tipo: TipoElemento
+    - puntosPoder: int
+    - nivelEvolucion: int
+
+    ' -- Constructor
+    + Pokemon(name: String, age: int, tipo: TipoElemento, puntosPoder: int, nivelEvolucion: int)
+    
+    ' -- Metodos
+    + alimentar(cantidadBayas: int): String
+    + atacarEspecial(): String
+    + expresarEmocion(): String
+    + dormir(): String
+    + hacerTruco(): String
 }
 
 enum TipoElemento {
@@ -24,23 +42,8 @@ enum TipoElemento {
     ELECTRICO
 }
 
-class Pokemon{
-    ' -- Atributos especiales
-    - tipo: TipoElemento
-    - puntosPoder: int
-    - nivelEvolucion: int
-
-    ' -- Constructor
-    + Pokemon(nombre: String, edad: int, tipo: TipoElemento)
-
-    ' -- Metodos
-    + atacarEspecial(): void
-    + expresarEmocion(): void
-    + hacerTruco(): void
-}
-
 ' -- Asociaciones
-Mascota <|-- Pokemon : hereda
-Pokemon --> TipoElemento : Elementos
+Mascota <|-- Pokemon
+Pokemon --> TipoElemento : tipos
 
 @enduml

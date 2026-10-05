@@ -14,11 +14,11 @@ import java.awt.*;
 
 public class InterfazMascota extends JFrame {
 
-    // Instancia de la clase hija
-    private Pokemon miMascota = new Pokemon(
-        "Draco",
+    // Referencia base para invocar acciones polimórficas
+    private Mascota miMascota = new Pokemon(
+        "Pikachu",
         3,
-        Pokemon.TipoElemento.FUEGO,
+        Pokemon.TipoElemento.ELECTRICO,
         80,
         1
     );
@@ -88,8 +88,8 @@ public class InterfazMascota extends JFrame {
 
         // Eventos de los botones
         btnAlimentar.addActionListener(e -> {
-            miMascota.alimentar();
-            txtLog.append(miMascota.getName() + " comió su ración básica.\n");
+            String mensaje = miMascota.alimentar();
+            txtLog.append(mensaje + "\n");
             actualizarBarras();
         });
 
@@ -110,8 +110,8 @@ public class InterfazMascota extends JFrame {
                     JOptionPane.showMessageDialog(this, "Ingresa una cantidad mayor que cero.");
                     return;
                 }
-                miMascota.alimentar(cantidadBayas);
-                txtLog.append(miMascota.getName() + " consumió " + cantidadBayas + " bayas.\n");
+                String mensaje = miMascota.alimentar(cantidadBayas);
+                txtLog.append(mensaje + "\n");
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Ingresa una cantidad entera válida.");
                 return;
@@ -120,26 +120,26 @@ public class InterfazMascota extends JFrame {
         });
 
         btnEspecial.addActionListener(e -> {
-            miMascota.atacarEspecial();
-            txtLog.append(miMascota.getName() + " realizó su ataque especial.\n");
+            String mensaje = miMascota.atacarEspecial();
+            txtLog.append(mensaje + "\n");
             actualizarBarras();
         });
 
         btnTruco.addActionListener(e -> {
-            miMascota.hacerTruco();
-            txtLog.append(miMascota.getName() + " hizo un truco.\n");
+            String mensaje = miMascota.hacerTruco();
+            txtLog.append(mensaje + "\n");
             actualizarBarras();
         });
 
         btnPokedescanso.addActionListener(e -> {
-            miMascota.dormir();
-            txtLog.append(miMascota.getName() + " se fue a descansar.\n");
+            String mensaje = miMascota.dormir();
+            txtLog.append(mensaje + "\n");
             actualizarBarras();
         });
 
         btnGritoPokemon.addActionListener(e -> {
-            miMascota.expresarEmocion();
-            txtLog.append(miMascota.getName() + " expresó su emoción.\n");
+            String mensaje = miMascota.expresarEmocion();
+            txtLog.append(mensaje + "\n");
             actualizarBarras();
         });
 
