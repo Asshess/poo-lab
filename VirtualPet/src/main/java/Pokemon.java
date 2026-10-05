@@ -13,12 +13,21 @@ public class Pokemon extends Mascota {
     private int puntosPoder;
     private int nivelEvolucion;
 
+    public Pokemon() {
+        this("Pikachu", 1, TipoElemento.ELECTRICO, 80, 1);
+    }
+
     public Pokemon(String name, int age, TipoElemento tipo, int puntosPoder, int nivelEvolucion) {
         super(name, age);
         this.tipo = tipo;
-        this.puntosPoder = puntosPoder;
-        this.nivelEvolucion = nivelEvolucion;
+        this.puntosPoder = limitarRango(puntosPoder);
+        this.nivelEvolucion = limitarRango(nivelEvolucion);
     }
+
+    private static int limitarRango(int valor) {
+        return Math.max(0, Math.min(100, valor));
+    }
+
     public TipoElemento getTipo() {
         return tipo;
     }
@@ -29,13 +38,13 @@ public class Pokemon extends Mascota {
         return puntosPoder;
     }
     public void setPuntosPoder(int puntosPoder) {
-        this.puntosPoder = puntosPoder;
+        this.puntosPoder = limitarRango(puntosPoder);
     }
     public int getNivelEvolucion() {
         return nivelEvolucion;
     }
     public void setNivelEvolucion(int nivelEvolucion) {
-        this.nivelEvolucion = nivelEvolucion;
+        this.nivelEvolucion = limitarRango(nivelEvolucion);
     }
 
     @Override

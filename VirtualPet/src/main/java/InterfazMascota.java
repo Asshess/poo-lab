@@ -30,7 +30,7 @@ public class InterfazMascota extends JFrame {
     private JTextArea txtLog;
 
     public InterfazMascota() {
-        setTitle("Mi Mascota POO");
+        setTitle(miMascota.getName());
         setSize(400, 480);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
