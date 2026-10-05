@@ -17,6 +17,6 @@
     </target>
 
     <target name="run" depends="compile">
-        <java classname="main.java.Main" classpath="${classes.dir}" />
+        <java classname="main.java.InterfazMascota" classpath="${classes.dir}" fork="true" />
     </target>
 </project>
