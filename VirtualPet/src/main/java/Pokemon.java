@@ -13,10 +13,12 @@ public class Pokemon extends Mascota {
     private int puntosPoder;
     private int nivelEvolucion;
 
+    // constructor por defecto con valores iniciales predeterminados
     public Pokemon() {
         this("Pikachu", 1, TipoElemento.ELECTRICO, 80, 1);
     }
 
+    // constructor sobrecargado; inicializa la parte base con super(...).
     public Pokemon(String name, int age, TipoElemento tipo, int puntosPoder, int nivelEvolucion) {
         super(name, age);
         this.tipo = tipo;
@@ -24,10 +26,12 @@ public class Pokemon extends Mascota {
         this.nivelEvolucion = limitarRango(nivelEvolucion);
     }
 
+    // mantiene los atributos propios dentro del rango 0 a 100
     private static int limitarRango(int valor) {
         return Math.max(0, Math.min(100, valor));
     }
 
+    // get & sets (para encapsular los atributos propios)
     public TipoElemento getTipo() {
         return tipo;
     }
@@ -47,6 +51,7 @@ public class Pokemon extends Mascota {
         this.nivelEvolucion = limitarRango(nivelEvolucion);
     }
 
+    // sobrecarga de alimentar con bayas y límites de estado
     @Override
     public String alimentar(int cantidadBayas){
         cantidadBayas = Math.max(0, cantidadBayas);
@@ -57,6 +62,7 @@ public class Pokemon extends Mascota {
         return mensaje;
     }
 
+    // sobrescribe ataque y devuelve su mensaje para JFrame
     @Override
     public String atacarEspecial(){
         hunger = Math.min(100, hunger + 20);
@@ -95,6 +101,7 @@ public class Pokemon extends Mascota {
         return mensaje;
     }
 
+    // no cambia hambre y limita la felicidad inferiormente
     @Override
     public String expresarEmocion(){
         happiness = Math.max(0, happiness - 15);
@@ -120,6 +127,7 @@ public class Pokemon extends Mascota {
         return mensaje;
     }
 
+    // aumenta hambre y felicidad con límite superior
     @Override
     public String dormir(){
         hunger = Math.min(100, hunger + 10);
@@ -129,6 +137,7 @@ public class Pokemon extends Mascota {
         return mensaje;
     }
 
+    // aplica el coste/beneficio y devuelve el mensaje para JFrame
     @Override
     public String hacerTruco(){
         hunger = Math.min(100, hunger + 15);

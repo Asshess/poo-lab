@@ -14,7 +14,6 @@ import java.awt.*;
 
 public class InterfazMascota extends JFrame {
 
-    // Referencia base para invocar acciones polimórficas
     private Mascota miMascota = new Pokemon(
         "Pikachu",
         3,
@@ -23,7 +22,6 @@ public class InterfazMascota extends JFrame {
         1
     );
 
-    // Componentes de la interfaz
     private JLabel lblNombre;
     private JProgressBar barHambre, barFelicidad;
     private JButton btnAlimentar, btnJugar, btnEspecial, btnTruco, btnPokedescanso, btnGritoPokemon;
@@ -36,7 +34,6 @@ public class InterfazMascota extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
-        // Panel Superior: Nombre y Barras de Estado
         JPanel panelEstado = new JPanel(new GridLayout(3, 2, 5, 5));
         panelEstado.setBorder(BorderFactory.createTitledBorder("Estado de la mascota"));
 
@@ -45,7 +42,7 @@ public class InterfazMascota extends JFrame {
 
         barHambre = new JProgressBar(0, 100);
         barHambre.setStringPainted(true);
-        barHambre.setForeground(new Color(220, 53, 69)); // Rojo
+        barHambre.setForeground(new Color(220, 53, 69));
 
         barFelicidad = new JProgressBar(0, 100);
         barFelicidad.setStringPainted(true);
@@ -58,17 +55,15 @@ public class InterfazMascota extends JFrame {
         panelEstado.add(new JLabel(" Nivel de Felicidad:"));
         panelEstado.add(barFelicidad);
 
-        // Panel Central: Bitácora de acciones
         txtLog = new JTextArea(8, 20);
         txtLog.setEditable(false);
         JScrollPane scrollLog = new JScrollPane(txtLog);
 
-        // Panel Inferior: Botones de Interacción
         JPanel panelBotones = new JPanel(new GridLayout(2, 3, 5, 5));
 
         btnAlimentar = new JButton("🍕 Alimentar");
         btnJugar = new JButton("🫐 Dar Bayas");
-        btnEspecial = new JButton("⭐ Ataque Especial"); // Método de la subclase
+        btnEspecial = new JButton("⭐ Ataque Especial");
         btnTruco = new JButton("🎪 Truco");
         btnPokedescanso = new JButton("😴 Pokedescanso");
         btnGritoPokemon = new JButton("🎭 Grito Pokémon");
@@ -81,12 +76,10 @@ public class InterfazMascota extends JFrame {
         panelBotones.add(btnPokedescanso);
         panelBotones.add(btnGritoPokemon);
 
-        // Agregar paneles al marco principal
         add(panelEstado, BorderLayout.NORTH);
         add(scrollLog, BorderLayout.CENTER);
         add(panelBotones, BorderLayout.SOUTH);
 
-        // Eventos de los botones
         btnAlimentar.addActionListener(e -> {
             String mensaje = miMascota.alimentar();
             txtLog.append(mensaje + "\n");
