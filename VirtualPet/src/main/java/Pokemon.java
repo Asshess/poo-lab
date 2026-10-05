@@ -38,13 +38,21 @@ public class Pokemon extends Mascota {
         this.nivelEvolucion = nivelEvolucion;
     }
 
+    public void alimentar(int cantidadBayas){
+        hunger = Math.max(0, hunger - (8 * cantidadBayas));
+        happiness = Math.min(100, happiness + (4 * cantidadBayas));
+        System.out.println("Pikachu consumió " + cantidadBayas + " bayas Arandano.");
+    }
+
     public void atacarEspecial(){
+        hunger = Math.min(100, hunger + 20);
+
         switch(this.tipo) {
             case FUEGO:
                 System.out.println(name + " usa Lanzallamas!");
                 break;
             case AGUA:
-                System.out.println(name + " usa Pistola Agua!");
+                System.out.println(name + " usa Chorro!");
                 break;
             case ELECTRICO:
                 System.out.println(name + " usa Impactrueno!");
@@ -53,18 +61,29 @@ public class Pokemon extends Mascota {
                 System.out.println(name + " usa Terremoto!");
                 break;
         }
+
+        int numeroAleatorio = (int) (Math.random() * 100) + 1;
+        if (numeroAleatorio <= 50) {
+            happiness = Math.min(100, happiness + 30);
+            System.out.println("Ataque exitoso! Felicidad: " + happiness);
+        } else {
+            happiness = Math.max(0, happiness - 10);
+            System.out.println("El ataque falló. Felicidad: " + happiness);
+        }
+
     }
-    
+
     public void expresarEmocion(){
+        happiness = happiness - 15;
         switch(this.tipo) {
             case FUEGO:
-                System.out.println(name + " hace chispitas");
+                System.out.println(name + " Esta mas rojo de lo normal. Estara molesto?");
                 break;
             case AGUA:
-                System.out.println(name + " te moja");
+                System.out.println(name + " Usa chorro (y tu eres el objetivo)");
                 break;
             case ELECTRICO:
-                System.out.println(name + " te da un ZAP");
+                System.out.println(name + " esta molesto y emite chispas");
                 break;
             case TIERRA:
                 System.out.println(name + " hace temblar la tierra");
@@ -75,7 +94,7 @@ public class Pokemon extends Mascota {
     public void hacerTruco(){
         switch(this.tipo) {
             case FUEGO:
-                System.out.println(name + " procede a sacar dos cigarros y los enciende *te ofrece uno*");
+                System.out.println(name + " Saca dos cigarros y los enciende *te ofrece uno*");
                 break;
             case AGUA:
                 System.out.println(name + " hace un chorro");

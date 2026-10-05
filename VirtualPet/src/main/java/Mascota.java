@@ -30,13 +30,21 @@ public abstract class Mascota {
         return happiness;
     }
 
-    public void feed() {
+    public void alimentar() {
         hunger = Math.max(0, hunger - 10);
         happiness = Math.min(100, happiness + 5);
+        System.out.println(name + " ha comido su racion basica.");
     }
 
-    public void play() {
+    public void jugar() {
         happiness = Math.min(100, happiness + 10);
         hunger = Math.min(100, hunger + 5);
     }
+
+    public void dormir() {
+        hunger = hunger + 10;
+        happiness = happiness + 25;
+        System.out.println(name + " se acurruca a descansar...");
+    }
+
 }
