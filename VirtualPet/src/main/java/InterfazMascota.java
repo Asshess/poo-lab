@@ -15,12 +15,18 @@ import java.awt.*;
 public class InterfazMascota extends JFrame {
 
     // Instancia de la clase hija
-    private Dragon miMascota = new Dragon("Draco");
+    private Pokemon miMascota = new Pokemon(
+        "Draco",
+        3,
+        Pokemon.TipoElemento.FUEGO,
+        80,
+        1
+    );
 
     // Componentes de la interfaz
-    private JLabel lblNombre, lblEstado;
+    private JLabel lblNombre;
     private JProgressBar barHambre, barFelicidad;
-    private JButton btnAlimentar, btnJugar, btnEspecial;
+    private JButton btnAlimentar, btnJugar, btnEspecial, btnTruco, btnPokedescanso, btnGritoPokemon;
     private JTextArea txtLog;
 
     public InterfazMascota() {
@@ -34,7 +40,7 @@ public class InterfazMascota extends JFrame {
         JPanel panelEstado = new JPanel(new GridLayout(3, 2, 5, 5));
         panelEstado.setBorder(BorderFactory.createTitledBorder("Estado de la mascota"));
 
-        lblNombre = new JLabel("Mascota: " + miMascota.getNombre(), SwingConstants.CENTER);
+        lblNombre = new JLabel("Mascota: " + miMascota.getName(), SwingConstants.CENTER);
         lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
 
         barHambre = new JProgressBar(0, 100);
@@ -58,15 +64,22 @@ public class InterfazMascota extends JFrame {
         JScrollPane scrollLog = new JScrollPane(txtLog);
 
         // Panel Inferior: Botones de Interacción
-        JPanel panelBotones = new JPanel(new FlowLayout());
+        JPanel panelBotones = new JPanel(new GridLayout(2, 3, 5, 5));
 
-        btnAlimentar = new JButton("🍎 Comer");
-        btnJugar = new JButton("🎮 Jugar");
-        btnEspecial = new JButton("🔥 Escupir Fuego"); // Método de la subclase
+        btnAlimentar = new JButton("🍕 Alimentar");
+        btnJugar = new JButton("🫐 Dar Bayas");
+        btnEspecial = new JButton("⭐ Ataque Especial"); // Método de la subclase
+        btnTruco = new JButton("🎪 Truco");
+        btnPokedescanso = new JButton("😴 Pokedescanso");
+        btnGritoPokemon = new JButton("🎭 Grito Pokémon");
+
 
         panelBotones.add(btnAlimentar);
         panelBotones.add(btnJugar);
         panelBotones.add(btnEspecial);
+        panelBotones.add(btnTruco);
+        panelBotones.add(btnPokedescanso);
+        panelBotones.add(btnGritoPokemon);
 
         // Agregar paneles al marco principal
         add(panelEstado, BorderLayout.NORTH);
@@ -75,20 +88,58 @@ public class InterfazMascota extends JFrame {
 
         // Eventos de los botones
         btnAlimentar.addActionListener(e -> {
-            miMascota.alimentar(); // Llama método del Padre
-            txtLog.append(miMascota.getNombre() + " comió una manzana.\n");
+            miMascota.alimentar();
+            txtLog.append(miMascota.getName() + " comió su ración básica.\n");
             actualizarBarras();
         });
 
         btnJugar.addActionListener(e -> {
-            miMascota.jugar(); // Llama método del Padre
-            txtLog.append(miMascota.getNombre() + " jugó un rato.\n");
+            String entrada = JOptionPane.showInputDialog(
+                this,
+                "Cuantas bayas quieres darle?",
+                "Dar Bayas",
+                JOptionPane.QUESTION_MESSAGE
+            );
+            if (entrada == null) {
+                return;
+            }
+
+            try {
+                int cantidadBayas = Integer.parseInt(entrada.trim());
+                if (cantidadBayas <= 0) {
+                    JOptionPane.showMessageDialog(this, "Ingresa una cantidad mayor que cero.");
+                    return;
+                }
+                miMascota.alimentar(cantidadBayas);
+                txtLog.append(miMascota.getName() + " consumió " + cantidadBayas + " bayas.\n");
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Ingresa una cantidad entera válida.");
+                return;
+            }
             actualizarBarras();
         });
 
         btnEspecial.addActionListener(e -> {
-            String mensaje = miMascota.escupirFuego(); // Llama método propio del Hijo
-            txtLog.append(mensaje + "\n");
+            miMascota.atacarEspecial();
+            txtLog.append(miMascota.getName() + " realizó su ataque especial.\n");
+            actualizarBarras();
+        });
+
+        btnTruco.addActionListener(e -> {
+            miMascota.hacerTruco();
+            txtLog.append(miMascota.getName() + " hizo un truco.\n");
+            actualizarBarras();
+        });
+
+        btnPokedescanso.addActionListener(e -> {
+            miMascota.dormir();
+            txtLog.append(miMascota.getName() + " se fue a descansar.\n");
+            actualizarBarras();
+        });
+
+        btnGritoPokemon.addActionListener(e -> {
+            miMascota.expresarEmocion();
+            txtLog.append(miMascota.getName() + " expresó su emoción.\n");
             actualizarBarras();
         });
 
@@ -96,11 +147,11 @@ public class InterfazMascota extends JFrame {
     }
 
     private void actualizarBarras() {
-        barHambre.setValue(miMascota.getHambre());
-        barHambre.setString(miMascota.getHambre() + "/100");
+        barHambre.setValue(miMascota.getHunger());
+        barHambre.setString(miMascota.getHunger() + "/100");
 
-        barFelicidad.setValue(miMascota.getFelicidad());
-        barFelicidad.setString(miMascota.getFelicidad() + "/100");
+        barFelicidad.setValue(miMascota.getHappiness());
+        barFelicidad.setString(miMascota.getHappiness() + "/100");
     }
 
     public static void main(String[] args) {
