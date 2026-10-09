@@ -1,0 +1,67 @@
+@startuml Teatro
+package Listas {
+	enum tiposCliente {
+		ESTUDIANTE
+		TERCERA_EDAD
+		NIÑO
+		DISCAPACITADO
+	}
+	
+	enum listaZona {
+		PRINCIPAL
+		PALCO
+		CENTRAL
+		LATERAL
+	}
+}
+
+package Main {
+    class Teatro {
+        + nombre: String
+        + id: int
+    }
+
+    class Cliente {
+        - nombre: String
+        - socialNumber: int
+        - Tipo: tiposCliente
+    }
+
+    class Zona {
+        + nombre: String
+        - cantLocalidades: int
+        - precioNormal: double
+        - precioAbonado: double
+    }
+
+    abstract class Entrada {
+        - funcion: String
+        - zona: listaZona
+        - cliente: Cliente
+        
+        + {abstract} calcularPrecio()
+    }
+
+    class Entrada_normal extends Entrada {
+        
+        + calcularPrecio()
+    }
+
+    class Entrada_reducida extends Entrada {
+        
+        + calcularPrecio()
+    }
+
+    class Entrada_abonado extends Entrada {
+        
+        + calcularPrecio()
+    }
+
+    ' -- Asociaciones
+
+    Zona "1" --o "1" Entrada : Tiene
+    Cliente "1" -- "*" Entrada : Compra 
+    Teatro "1" *-- "*" Cliente
+    Teatro "1" *-- "1..*" Zona
+}
+@enduml
