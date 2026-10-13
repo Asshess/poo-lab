@@ -9,6 +9,13 @@ class Proyecto {
 
 }
 
+class Usuario{
+    - id: int 
+    - nombre: String 
+    - direccion: String 
+    - telefono: int 
+}
+
 class Plano{
     - id: int
     - fecha_entrega: int
@@ -23,18 +30,12 @@ class Figura{
     - perimetro: float 
 }
 
-class JefeProyecto{
-    - id: int 
-    - nombre: String 
-    - direccion: String 
-    - telefono: int 
+class JefeProyecto extends Usuario{
+
 }
 
-class Arquitecto{
-    - id: int 
-    - nombre: String 
-    - direccion: String 
-    - telefono: int 
+class Arquitecto extends Usuario{
+    
 }
 
 class Poligono extends Figura{
