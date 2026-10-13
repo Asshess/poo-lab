@@ -38,7 +38,7 @@ class Arquitecto extends Usuario{
     - plano: int
 }
 
-class Poligono{
+class Poligono extends Figura{
     - numLinea: int
 }
 
@@ -54,10 +54,9 @@ class Linea{
 
 Proyecto "1" -- "1" JefeProyecto : Requiere
 Proyecto "1" o-- "0..*" Plano : Contiene
-Plano "1" -- "*" Figura : Dibuja
-Poligono "1" *-- "*" Linea : Forma
-Linea "1" *-- "2" Punto : Coordenadas
+Plano "1" *-- "*" Figura : Tiene
+Poligono "1" *-- "*" Linea : Se Forma
+Linea "1" *-- "2" Punto : Contiene
 Plano "1" -- "*" Arquitecto : Trabaja
-Figura "*" o-- "*" Poligono : Herencia
 
 @enduml

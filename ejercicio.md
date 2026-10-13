@@ -19,5 +19,7 @@ Además, de los polígonos se desea conocer el número de líneas que tienen, ad
 
 
 
-La longitud de la línea se puede calcular a partir de sus puntos origen y final. Elaborar el Diagrama de clases correspondiente.
+La longitud de la línea se puede calcular a partir de sus puntos origen y final. 
+
+Elabora el Diagrama de clases correspondiente.
 
