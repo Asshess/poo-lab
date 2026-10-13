@@ -53,10 +53,10 @@ class Linea{
 }
 
 Proyecto "1" -- "1" JefeProyecto : Requiere
-Proyecto "1" o-- "0..*" Plano : Contiene
-Plano "1" *-- "*" Figura : Tiene
-Poligono "1" *-- "*" Linea : Se Forma
-Linea "1" *-- "2" Punto : Contiene
+Proyecto "0..1" o-- "0..*" Plano : Contiene
+Plano "1" *-- "0..*" Figura : Tiene
+Poligono "1" *-- "3..*" Linea : Se Forma
+Linea "1" *-- "2" Punto : Contiene (origen y fin)
 Plano "1" -- "*" Arquitecto : Trabaja
 
 @enduml
