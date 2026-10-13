@@ -1,24 +1,11 @@
 
 Un estudio de arquitectura desea crear una App para gestionar sus proyectos
 
-    . 
-
 Cada proyecto tiene un código y un nombre.
-
-    - codigo: int 
-    - nombre: String
 
 Un proyecto tiene uno y solo un jefe de proyecto y un jefe de proyecto sólo puede estar involucrado en un proyecto o en ninguno. De cada jefe de proyecto se desean recoger sus datos personales (codigo, nombre, dirección y teléfono). Un jefe de proyecto se identifica por un código. 
 
-    - Jefe_id: int "1..*"
-
-
-
 Un proyecto se compone de una serie de planos, pero éstos se quieren guardar de modo independiente al proyecto. Es decir, si en un momento dado se dejara de trabajar en un proyecto, se desea mantener la información de los planos asociados. De los planos se desea guardar su número de identificación, la fecha de entrega, los arquitectos que trabajan en él y un dibujo del plano general con información acerca del número de figuras que contiene.
-
-    La clase de los planos es independiente del proyecto, osea el proyecto solo apunta a los planos guardados en la base de datos del programa, en caso de que el proyecto sea eliminado los planos simplemente dejarian de ser accesibles via el proyecto quedando asociado SIEMPRE a su creador
-    
-    
 
 Los planos tienen figuras. De cada figura se desea conocer, el identificador, el nombre, el color, el área y el perímetro.  
 

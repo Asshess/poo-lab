@@ -3,8 +3,8 @@
 class Proyecto {
     + nombre: String
     + codigo: int 
-    - Jefe_id: Arquitecto.getId 
-    - Integrantes: Array
+    - Jefe_id: JefeProyecto.getId 
+    - Integrantes: Array{id}
     - Planos: "Array con los {id} de los planos asociados"
 
 }
@@ -35,26 +35,29 @@ class JefeProyecto extends Usuario{
 }
 
 class Arquitecto extends Usuario{
-    
+    - plano: int
 }
 
-class Poligono extends Figura{
-
+class Poligono{
+    - numLinea: int
 }
 
-class Coordenada{
-
+class Punto{
+    - X: float
+    - Y: float
 }
 
 class Linea{
-
+    - id: int 
+    - longitud: float 
 }
 
-Proyecto "1" -- "1" JefeProyecto
-Proyecto "1" -- "0..*" Plano
-Plano "1" -- "*" Figura
-Poligono "1" --* Linea
-Linea "1" -- "2" Coordenada
-Plano "1" -- "*" Arquitecto
+Proyecto "1" -- "1" JefeProyecto : Requiere
+Proyecto "1" o-- "0..*" Plano : Contiene
+Plano "1" -- "*" Figura : Dibuja
+Poligono "1" *-- "*" Linea : Forma
+Linea "1" *-- "2" Punto : Coordenadas
+Plano "1" -- "*" Arquitecto : Trabaja
+Figura "*" o-- "*" Poligono : Herencia
 
 @enduml
