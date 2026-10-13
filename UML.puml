@@ -1,0 +1,59 @@
+@startuml
+
+class Proyecto {
+    + nombre: String
+    + codigo: int 
+    - Jefe_id: Arquitecto.getId 
+    - Integrantes: Array
+    - Planos: "Array con los {id} de los planos asociados"
+
+}
+
+class Plano{
+    - id: int
+    - fecha_entrega: int
+    - Users: "Array con los ids de los Arquitectos
+}
+
+class Figura{
+    - id: int 
+    - nombre: String 
+    - color: listaColores
+    - area: float 
+    - perimetro: float 
+}
+
+class JefeProyecto{
+    - id: int 
+    - nombre: String 
+    - direccion: String 
+    - telefono: int 
+}
+
+class Arquitecto{
+    - id: int 
+    - nombre: String 
+    - direccion: String 
+    - telefono: int 
+}
+
+class Poligono extends Figura{
+
+}
+
+class Coordenada{
+
+}
+
+class Linea{
+
+}
+
+Proyecto "1" -- "1" JefeProyecto
+Proyecto "1" -- "0..*" Plano
+Plano "1" -- "*" Figura
+Poligono "1" --* Linea
+Linea "1" -- "2" Coordenada
+Plano "1" -- "*" Arquitecto
+
+@enduml
