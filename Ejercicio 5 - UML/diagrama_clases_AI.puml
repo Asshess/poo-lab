@@ -1,5 +1,5 @@
 @startuml
-title Estudio de arquitectura - Diagrama de clases
+title Estudio de arquitectura - Diagrama de clases (IA)
 
 skinparam classAttributeIconSize 0
 skinparam linetype ortho

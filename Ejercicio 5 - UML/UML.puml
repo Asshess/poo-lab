@@ -1,11 +1,10 @@
 @startuml
+title Laboratorio 2 // Ejercicio 5
 
 class Proyecto {
     + nombre: String
     + codigo: int 
-    - Jefe_id: JefeProyecto.getId 
-    - Integrantes: Array{id}
-    - Planos: "Array con los {id} de los planos asociados"
+    - Jefe_id: int 
 
 }
 
@@ -59,4 +58,13 @@ Poligono "1" *-- "3..*" Linea : Se Forma
 Linea "1" *-- "2" Punto : Contiene (origen y fin)
 Plano "1" -- "*" Arquitecto : Trabaja
 
+package Estudiantes{    
+    enum Integrantes {
+        Alessandro
+        Jade
+        Sebastian
+    }
+}
 @enduml
+
+' Es un copy paste de lo que hicimos en el cuaderno, yo Alessandro lo transcribi A MANO a PUML para hacerlo entregable y limpio
