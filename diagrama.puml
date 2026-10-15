@@ -1,0 +1,61 @@
+@startuml
+abstract class Transporte {
+    # double horasConducidas
+    + Transporte(double horasConducidas)
+    + calcularPagoFijoPorHora(): double
+    + {abstract} calcularBonificacionEspecifica(): double
+    + calcularPagoTotalTransporte(): double
+}
+
+class TransportePersonas {
+    - int cantidadPersonas
+    + TransportePersonas(double horasConducidas, int cantidadPersonas)
+    + calcularBonificacionEspecifica(): double
+    + obtenerDatos(): String
+}
+
+class TransporteMercancias {
+    # double toneladas
+    + TransporteMercancias(double horasConducidas, double toneladas)
+    + calcularBonificacionEspecifica(): double
+    + obtenerDatos(): String
+}
+
+class TransporteMercanciasPeligrosas {
+    + TransporteMercanciasPeligrosas(double horasConducidas, double toneladas)
+    + calcularBonificacionEspecifica(): double
+    + obtenerDatos(): String
+}
+
+class Conductor {
+    - String cedula
+    - String nombre
+    - String apellido
+    - int edad
+    - double sueldoBase
+    - ArrayList<Transporte> transportesRealizados
+    + Conductor(String cedula, String nombre, String apellido, int edad)
+    + agregarTransporte(Transporte t)
+    + calcularSueldoTotal(): double
+    + getCedula(): String
+    + getNombre(): String
+    + getApellido(): String
+    + getTransportesRealizados(): ArrayList<Transporte>
+}
+
+class Main {
+    - ArrayList<Conductor> listaConductores
+    + Main()
+    - anadirConductor(): void
+    - asignarTransporte(): void
+    - listarPeligrosas(): void
+    - verSueldos(): void
+    + {static} main(String[] args): void
+}
+
+Transporte <|-- TransportePersonas
+Transporte <|-- TransporteMercancias
+TransporteMercancias <|-- TransporteMercanciasPeligrosas
+Conductor *-- Transporte : realiza >
+Main o-- Conductor : almacena >
+@enduml
