@@ -1,18 +1,28 @@
 package com.laboratorio.transporte;
 
+
 public class TransporteMercanciasPeligrosas extends TransporteMercancias {
     
+    // Constructor
     public TransporteMercanciasPeligrosas(double horasConducidas, double toneladas) {
         super(horasConducidas, toneladas);
     }
 
-    // Sobreescribimos de nuevo para sumar los 50 dolares fijos
+    // Constructor sobrecargado
+    public TransporteMercanciasPeligrosas() {
+        super();
+    }
+
+    // Calcula el bono
+    @Override
     public double calcularBonificacionEspecifica() {
         double bonoNormal = super.calcularBonificacionEspecifica();
         return bonoNormal + 50.0;
     }
     
+    // Devuelve un texto
+    @Override
     public String obtenerDatos() {
-        return "Mercancías Peligrosas (Toneladas: " + toneladas + ", Horas: " + horasConducidas + ")";
+        return "Mercancias Peligrosas: " + toneladas + ", Horas: " + horasConducidas;
     }
 }
