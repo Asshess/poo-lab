@@ -18,7 +18,7 @@
 
 <div style="font-size: 13pt; margin-top: 8px;">Alessandro Pérez — 31.831.783</div>
 
-<div style="font-size: 13pt;">Jade {apellido} — {cédula}</div>
+<div style="font-size: 13pt;">Jade Salazar — 31.781.793</div>
 
 <div style="margin-top: 110px;"></div>
 
