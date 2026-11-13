@@ -3,15 +3,15 @@
 # Taller UML y Validación Crítica con IA
 
 <p><strong>Caso de estudio:</strong> UcabRecicla Express</p>
-<p>Unidad curricular: Programación Orientada a Objetos<br>Docente: Jannelly Bello</p>
+<p>Programación Orientada a Objetos<br>Docente: Jannelly Bello</p>
 
 <p><strong>Integrantes</strong><br>
-Alessandro<br>
-Jade<br>
-Sebastian</p>
+Alessandro Perez<br>
+Jade Salazar<br>
+Sebastian Rivas</p>
 
 <p><strong>Herramienta de IA utilizada:</strong> Gemini &nbsp;·&nbsp; Renderizado: Mermaid Live</p>
-<p>12 de noviembre de 2026</p>
+<p>13 de noviembre de 2026</p>
 
 </div>
 
