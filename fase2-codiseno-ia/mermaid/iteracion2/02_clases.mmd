@@ -1,0 +1,92 @@
+classDiagram
+    class Material {
+        <<enumeration>>
+        PLASTICO
+        ALUMINIO
+        CARTON
+    }
+
+    class Usuario {
+        -idUsuario: String
+        +consultarContenedores() void
+    }
+
+    class UsuarioAutenticado {
+        +seleccionarPuntoVerde() void
+        +registrarDeposito(cantidad: int, material: Material, foto: String) void
+    }
+    Usuario <|-- UsuarioAutenticado
+
+    class PersonalLogistico {
+        -idPersonal: String
+        +recibirNotificacionVaciado() void
+    }
+
+    class PuntoVerde {
+        -idPuntoVerde: String
+        -ubicacion: String
+    }
+
+    class Contenedor {
+        -idContenedor: String
+        -material: Material
+        -capacidadMaxima: int = 30
+        -nivelLlenado: int
+        +actualizarInventario(cantidad: int) int
+        +verificarCapacidad() boolean
+    }
+
+    class Deposito {
+        -idTransaccion: String
+        -cantidadEnvases: int
+        -fotoEvidencia: String
+        +confirmarDeposito() void
+    }
+
+    class ReporteFraude {
+        -cantidadDeclarada: int
+    }
+
+    class AlertaOperativa {
+        -idAlerta: String
+        +notificarPersonal() void
+    }
+
+    class AppUcabRecicla {
+        +registrarDeposito(cantidad: int, material: Material, foto: String) void
+    }
+
+    class ControladorDepositos {
+        -MAX_ENVASES_FRAUDE: int = 10
+        +procesarDeclaracion(cantidad: int, material: Material, foto: String) void
+        +evaluarFiltroFraude(cantidad: int) boolean
+        +confirmacionVerificacion(resultado: boolean) void
+    }
+
+    class ServicioFotoEvidencia {
+        +verificarEvidenciaAsync(foto: String) void
+    }
+
+    class ConsolaAdministracion {
+        +dispararEventoAlerta(idContenedor: String, mensaje: String) void
+    }
+
+    %% Relaciones Estructurales
+    PuntoVerde "1" *-- "1..*" Contenedor : contiene
+    Contenedor "1" <-- "*" Deposito : se registra en
+    Contenedor "1" --> "0..*" AlertaOperativa : se refiere a
+    AlertaOperativa "*" --> "1" PersonalLogistico : notifica a
+    Deposito "*" --> "1" Material : clasifica
+    UsuarioAutenticado "1" --> "*" Deposito : realiza
+    
+    %% Relaciones de Reporte de Fraude
+    ControladorDepositos "1" --> "0..*" ReporteFraude : genera
+    ReporteFraude "*" --> "1" UsuarioAutenticado : registra a
+    
+    %% Dependencias de arquitectura y secuencia con multiplicidad
+    AppUcabRecicla "1" --> "1" ControladorDepositos : invoca
+    ControladorDepositos "1" --> "*" Deposito : crea y gestiona
+    ControladorDepositos "1" --> "1" ServicioFotoEvidencia : solicita validación
+    ControladorDepositos "1" --> "1" ConsolaAdministracion : alerta a
+    ControladorDepositos "1" --> "*" Contenedor : actualiza
+    ConsolaAdministracion "1" --> "*" AlertaOperativa : crea

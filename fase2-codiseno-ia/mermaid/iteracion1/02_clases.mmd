@@ -1,0 +1,86 @@
+classDiagram
+    class Material {
+        <<enumeration>>
+        PLASTICO
+        ALUMINIO
+        CARTON
+    }
+
+    class Usuario {
+        -idUsuario: String
+        +consultarContenedores() void
+    }
+
+    class UsuarioAutenticado {
+        +seleccionarPuntoVerde() void
+        +registrarDeposito(cantidad: int, material: Material, foto: String) void
+    }
+    Usuario <|-- UsuarioAutenticado
+
+    class PersonalLogistico {
+        -idPersonal: String
+        +recibirNotificacionVaciado() void
+    }
+
+    class PuntoVerde {
+        -idPuntoVerde: String
+        -ubicacion: String
+    }
+
+    class Contenedor {
+        -idContenedor: String
+        -material: Material
+        -capacidadMaxima: int = 30
+        -nivelLlenado: int
+        +actualizarInventario(cantidad: int) int
+        +verificarCapacidad() boolean
+    }
+
+    class Deposito {
+        -idTransaccion: String
+        -cantidadEnvases: int
+        -fotoEvidencia: String
+        +confirmarDeposito() void
+    }
+
+    class ReporteFraude {
+        -idReporte: String
+    }
+
+    class AlertaOperativa {
+        -idAlerta: String
+        +notificarPersonal() void
+    }
+
+    class AppUcabRecicla {
+        +registrarDeposito(cantidad: int, material: Material, foto: String) void
+    }
+
+    class ControladorDepositos {
+        -MAX_ENVASES_FRAUDE: int = 10
+        +procesarDeclaracion(cantidad: int, material: Material, foto: String) void
+        +evaluarFiltroFraude(cantidad: int) boolean
+    }
+
+    class ServicioFotoEvidencia {
+        +verificarEvidenciaAsync(foto: String) void
+    }
+
+    class ConsolaAdministracion {
+        +dispararEventoAlerta(idContenedor: String, mensaje: String) void
+    }
+
+    %% Relaciones
+    PuntoVerde "1" *-- "1..*" Contenedor : contiene
+    Contenedor "1" <-- "*" Deposito : se registra en
+    Contenedor "1" --> "0..*" AlertaOperativa : genera
+    AlertaOperativa "*" --> "1" PersonalLogistico : notifica a
+    Deposito "1" --> "0..1" ReporteFraude : genera
+    Deposito "*" --> "1" Material : clasifica
+    UsuarioAutenticado "1" --> "*" Deposito : realiza
+    
+    %% Dependencias de arquitectura (agregadas por consistencia con interacción)
+    AppUcabRecicla --> ControladorDepositos : invoca
+    ControladorDepositos --> Deposito : crea y gestiona
+    ControladorDepositos --> ServicioFotoEvidencia : solicita validación
+    ControladorDepositos --> ConsolaAdministracion : alerta a
