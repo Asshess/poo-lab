@@ -42,4 +42,4 @@ Lee [`CONTRIBUTING.md`](CONTRIBUTING.md) para el flujo completo y los comandos d
 
 ## Historial
 
-El repositorio reúne la historia de los proyectos que antes vivían en repos separados y en la rama `practicas` del vault de Obsidian. Los commits originales se conservan.
+El repositorio reúne la historia de los proyectos que antes vivían en repos separados y en la rama `practicas` del vault de Obsidian. Se conservaron los commits y autores de cada proyecto.
