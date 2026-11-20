@@ -1,0 +1,37 @@
+flowchart LR
+    Profesor(["👤 Profesor"])
+    Estudiante(["👤 Estudiante"])
+    Cliente(["👤 Cliente"])
+    Barista(["👤 Barista"])
+    Pasarela(["⚙️ Pasarela de Pago\n«Sistema Externo»"])
+    Matricula(["⚙️ Sistema de Matrícula\n«Sistema Externo»"])
+
+    Profesor -->|"«hereda de»"| Cliente
+    Estudiante -->|"«hereda de»"| Cliente
+
+    subgraph CoffeeCampusApp["Coffee Campus App"]
+        UC1(["Consultar Menú"])
+        UC2(["Iniciar Sesión"])
+        UC3(["Crear Pedido"])
+        UC4(["Aplicar Descuento Estudiantil"])
+        UC5(["Validar Matrícula"])
+        UC6(["Procesar Pago"])
+        UC7(["Notificar Rechazo de Pago"])
+        UC8(["Preparar Pedido"])
+        UC9(["Notificar Cliente"])
+    end
+
+    Cliente --> UC1
+    Cliente --> UC3
+
+    UC3 -->|"«include»"| UC2
+    UC3 -->|"«include»"| UC6
+    UC4 -.->|"«extend»"| UC3
+    UC4 -->|"«include»"| UC5
+    UC5 --> Matricula
+
+    UC6 --> Pasarela
+    UC7 -.->|"«extend»"| UC6
+
+    Barista --> UC8
+    UC8 -->|"«include»"| UC9

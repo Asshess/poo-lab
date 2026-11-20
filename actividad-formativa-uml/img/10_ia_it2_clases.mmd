@@ -1,0 +1,67 @@
+classDiagram
+    class Usuario {
+        - idUsuario : String
+        - nombre : String
+        - correo : String
+        + consultarMenu() void
+        + iniciarSesion() boolean
+        + cerrarSesion() void
+    }
+
+    class Cliente {
+        - idMatricula : String
+        - esEstudiante : boolean
+        + solicitarDescuento() boolean
+    }
+
+    class Barista {
+        - idTurno : String
+        + verPedidosPendientes() void
+        + actualizarEstadoPedido() void
+    }
+
+    class Catalogo {
+        - version : String
+        + obtenerProductosDisponibles() List
+    }
+
+    class Producto {
+        - idProducto : String
+        - nombre : String
+        - precio : double
+        - disponible : boolean
+        + getPrecio() double
+    }
+
+    class Pedido {
+        - idPedido : String
+        - fecha : Date
+        - estado : String
+        - total : double
+        + agregarDetalle() void
+        + aplicarDescuento() void
+        + calcularTotal() double
+    }
+
+    class DetallePedido {
+        - cantidad : int
+        - subtotal : double
+        + calcularSubtotal() double
+    }
+
+    class Pago {
+        - idPago : String
+        - monto : double
+        - estado : String
+        + procesarTransaccion() void
+    }
+
+    Usuario <|-- Cliente
+    Usuario <|-- Barista
+
+    Catalogo "1" o-- "1..*" Producto : agrupa
+    Cliente "1" --> "0..*" Pedido : realiza
+    Barista "1" --> "0..*" Pedido : prepara
+    Pedido "1" *-- "1..*" DetallePedido : contiene
+    DetallePedido "0..*" --> "1" Producto : refiere a
+    Pedido "1" --> "0..1" Pago : registra
