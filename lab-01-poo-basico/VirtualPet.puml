@@ -1,0 +1,49 @@
+@startuml VirtualPet
+
+abstract class Mascota {
+    # name: String
+    # age: int
+    # hunger: int
+    # happiness: int
+
+    ' -- Constructor
+    + Mascota(name: String, age: int)
+
+    ' -- Metodos
+    + alimentar(): String
+    + {abstract} alimentar(cantidadBayas: int): String
+    + {abstract} atacarEspecial(): String
+    + {abstract} expresarEmocion(): String
+    + {abstract} dormir(): String
+    + {abstract} hacerTruco(): String
+    + jugar(): void
+}
+
+class Pokemon {
+    - tipo: TipoElemento
+    - puntosPoder: int
+    - nivelEvolucion: int
+
+    ' -- Constructor
+    + Pokemon(name: String, age: int, tipo: TipoElemento, puntosPoder: int, nivelEvolucion: int)
+    
+    ' -- Metodos
+    + alimentar(cantidadBayas: int): String
+    + atacarEspecial(): String
+    + expresarEmocion(): String
+    + dormir(): String
+    + hacerTruco(): String
+}
+
+enum TipoElemento {
+    AGUA
+    FUEGO
+    TIERRA
+    ELECTRICO
+}
+
+' -- Asociaciones
+Mascota <|-- Pokemon
+Pokemon --> TipoElemento : tipos
+
+@enduml
