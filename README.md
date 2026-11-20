@@ -2,9 +2,17 @@
 
 [![CI](https://github.com/Asshess/poo-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/Asshess/poo-lab/actions/workflows/ci.yml)
 
-Laboratorios, talleres y actividades de Programación Orientada a Objetos (UCAB) reunidos en un solo repositorio. Cada carpeta es un entregable independiente, con su propio README, build y documentación.
+Laboratorios, talleres y el proyecto final de Programación Orientada a Objetos (UCAB) reunidos en un solo repositorio. Cada carpeta es un entregable independiente, con su propio README, build y documentación.
 
-## Proyectos
+## Proyecto final
+
+El entregable principal del curso vive en [`proyecto-final/`](proyecto-final/). Está en preparación: su README concentra el alcance, el stack y los comandos cuando existan.
+
+| Carpeta | Contenido | Stack | Estado |
+|---|---|---|---|
+| [`proyecto-final`](proyecto-final/) | Proyecto final del curso | Por definir | En preparación |
+
+## Laboratorios y talleres
 
 | Carpeta | Contenido | Stack | Cómo ejecutar |
 |---|---|---|---|
@@ -42,4 +50,4 @@ Lee [`CONTRIBUTING.md`](CONTRIBUTING.md) para el flujo completo y los comandos d
 
 ## Historial
 
-El repositorio reúne la historia de los proyectos que antes vivían en repos separados y en la rama `practicas` del vault de Obsidian. Se conservaron los commits y autores de cada proyecto.
+El repositorio reúne la historia de los proyectos que antes vivían en repos separados y en la rama `practicas` del vault de Obsidian. Se conservaron los commits y autores de cada proyecto. El proyecto final comienza su historia aquí.

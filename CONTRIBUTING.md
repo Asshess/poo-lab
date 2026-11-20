@@ -37,6 +37,8 @@ Tipos: `feat`, `fix`, `docs`, `test`, `refactor`, `chore` y `ci`.
 
 Las actividades de UML (`taller-uml` y `actividad-formativa-uml`) no tienen build: son documentación y diagramas.
 
+El proyecto final vive en `proyecto-final/`. Cuando tenga build propio, se añade su comando a la tabla anterior y un job `Proyecto final` al CI; mientras tanto, su README es la referencia.
+
 ## Reglas
 
 - No versionar `target/`, `build/`, `dist/`, `.class` ni `.jar`.
@@ -51,7 +53,8 @@ Para congelar una entrega:
 
 ```bash
 git tag -a lab-01/v1.0 -m "Entrega del Laboratorio 1"
-git push origin lab-01/v1.0
+git tag -a final/v1.0 -m "Entrega del proyecto final"
+git push origin lab-01/v1.0 final/v1.0
 ```
 
 Si la entrega incluye un PDF, adjúntalo también a un GitHub Release con el mismo nombre.
