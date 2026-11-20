@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lab-01:
+    name: Lab 01 · VirtualPet
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
+        with:
+          distribution: temurin
+          java-version: '27'
+      - name: Instalar Ant
+        run: sudo apt-get update && sudo apt-get install -y ant
+      - name: Compilar
+        working-directory: lab-01-poo-basico/VirtualPet
+        run: ant compile
+
+  lab-02:
+    name: Lab 02 · Sistema de transporte
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
+        with:
+          distribution: temurin
+          java-version: '27'
+          cache: maven
+          cache-dependency-path: lab-02-poo-basico-uml/ejercicio-1-sistema-transporte/pom.xml
+      - name: Compilar y probar
+        run: mvn -B -f lab-02-poo-basico-uml/ejercicio-1-sistema-transporte/pom.xml verify
+
+  lab-03:
+    name: Lab 03 · Farmacia
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
+        with:
+          distribution: temurin
+          java-version: '27'
+      - name: Instalar Ant
+        run: sudo apt-get update && sudo apt-get install -y ant
+      - name: Compilar y empaquetar
+        working-directory: lab-03-poo-avanzado
+        run: ant
+
+  teatro:
+    name: Teatro
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
+        with:
+          distribution: temurin
+          java-version: '27'
+          cache: maven
+          cache-dependency-path: teatro/teatro/pom.xml
+      - name: Compilar y probar
+        run: mvn -B -f teatro/teatro/pom.xml verify
+
+  higiene:
+    name: Sin artefactos versionados
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Comprobar que no se cuelan artefactos
+        run: |
+          offenders=$(git ls-files | grep -E '(^|/)(target|build|dist)/|\.(class|jar)$' || true)
+          if [ -n "$offenders" ]; then
+            echo "::error::Hay artefactos de build versionados"
+            echo "$offenders"
+            exit 1
+          fi
+          echo "OK: no hay artefactos versionados"
