@@ -1,0 +1,70 @@
+@startuml
+title Laboratorio 2 // Ejercicio 5
+
+class Proyecto {
+    + nombre: String
+    + codigo: int 
+    - Jefe_id: int 
+
+}
+
+class Usuario{
+    - id: int 
+    - nombre: String 
+    - direccion: String 
+    - telefono: int 
+}
+
+class Plano{
+    - id: int
+    - fecha_entrega: int
+    - Users: "Array con los ids de los Arquitectos
+}
+
+class Figura{
+    - id: int 
+    - nombre: String 
+    - color: listaColores
+    - area: float 
+    - perimetro: float 
+}
+
+class JefeProyecto extends Usuario{
+
+}
+
+class Arquitecto extends Usuario{
+    - plano: int
+}
+
+class Poligono extends Figura{
+    - numLinea: int
+}
+
+class Punto{
+    - X: float
+    - Y: float
+}
+
+class Linea{
+    - id: int 
+    - longitud: float 
+}
+
+Proyecto "1" -- "1" JefeProyecto : Requiere
+Proyecto "0..1" o-- "0..*" Plano : Contiene
+Plano "1" *-- "0..*" Figura : Tiene
+Poligono "1" *-- "3..*" Linea : Se Forma
+Linea "1" *-- "2" Punto : Contiene (origen y fin)
+Plano "1" -- "*" Arquitecto : Trabaja
+
+package Estudiantes{    
+    enum Integrantes {
+        Alessandro
+        Jade
+        Sebastian
+    }
+}
+@enduml
+
+' Es un copy paste de lo que hicimos en el cuaderno, yo Alessandro lo transcribi A MANO a PUML para hacerlo entregable y limpio

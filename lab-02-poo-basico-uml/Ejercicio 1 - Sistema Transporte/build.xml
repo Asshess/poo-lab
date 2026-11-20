@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="SistemaSueldosTransporte" default="compile" basedir=".">
+
+    <property name="src.dir" value="src/main/java"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="main-class" value="com.laboratorio.transporte.Main"/>
+
+    <target name="clean" description="Limpia los archivos compilados">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="compile" description="Compila el codigo fuente">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" 
+               destdir="${classes.dir}" 
+               includeantruntime="false" 
+               source="27" 
+               target="27">
+        </javac>
+    </target>
+
+    <target name="run" depends="compile" description="Ejecuta la aplicacion">
+        <java classname="${main-class}" fork="true">
+            <classpath>
+                <pathelement path="${classes.dir}"/>
+            </classpath>
+        </java>
+    </target>
+
+</project>
