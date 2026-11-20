@@ -1,0 +1,24 @@
+flowchart LR
+    %% Nodos (Objetos / Participantes)
+    UA((Usuario))
+    APP[App UcabRecicla]
+    CTRL[Controlador Depósitos]
+    VF[Servicio FotoEvidencia]
+    PV[Entidad PuntoVerde]
+    CONS[Consola Admin]
+
+    %% Enlaces únicos por cada par con direccionalidad simulada en los labels y numeración jerárquica
+    UA -- "1: registrarDeposito(5, foto) ▶" --- APP
+    
+    APP -- "1.1: procesarDeclaracion(5, foto) ▶" --- CTRL
+    
+    %% El Controlador interactúa con los 3 subsistemas
+    CTRL -- "1.1.1: [asíncrono] verificarEvidencia(foto) ▶ <br> ◀ 2: confirmacionVerificacion(OK)" --- VF
+    
+    CTRL -- "2.1: sumarInventario(5) ▶ <br> ◀ 2.1.1: retorna(nuevoAcumulado=30)" --- PV
+    
+    CTRL -- "2.2: [acumulado >= 30] dispararEventoAlerta() ▶" --- CONS
+
+    %% Estilos para semejar un entorno UML
+    classDef object fill:#f9f9f9,stroke:#333,stroke-width:2px;
+    class APP,CTRL,VF,PV,CONS object;

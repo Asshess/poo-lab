@@ -1,0 +1,48 @@
+classDiagram
+    class Material {
+        <<enumeration>>
+        PLASTICO
+        ALUMINIO
+        CARTON
+    }
+
+    class UsuarioAutenticado {
+        -String idUsuario
+        -String credenciales
+        +seleccionarPuntoVerde() void
+        +declararReciclaje(cantidad: int, material: Material) Deposito
+    }
+
+    class PuntoVerde {
+        -String idContenedor
+        -String ubicacion
+        -int capacidadMaxima
+        -int nivelLlenado
+        +consultarEstado() String
+        +actualizarInventario(cantidad: int) int
+        +verificarCapacidad() boolean
+    }
+
+    class Deposito {
+        -String idTransaccion
+        -int cantidadEnvases
+        -String fotoEvidencia
+        -String estadoProceso
+        -Date fecha
+        +evaluarFiltroFraude() boolean
+        +iniciarVerificacionAsincrona() void
+        +confirmarDeposito() void
+    }
+
+    class AlertaOperativa {
+        -String idAlerta
+        -String tipoAlerta
+        -Date fechaGeneracion
+        +notificarPersonal() void
+    }
+
+    %% Relaciones y multiplicidad
+    UsuarioAutenticado "1" --> "*" Deposito : "realiza"
+    Deposito "*" --> "1" Material : "clasifica"
+    PuntoVerde "1" <-- "*" Deposito : "registra en"
+    PuntoVerde "1" *-- "*" AlertaOperativa : "genera (Composición)"

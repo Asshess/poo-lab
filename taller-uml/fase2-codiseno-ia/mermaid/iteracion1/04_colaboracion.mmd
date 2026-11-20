@@ -1,0 +1,34 @@
+flowchart LR
+    %% Nodos con notación de instancia :Clase
+    UA((:UsuarioAutenticado))
+    APP[:AppUcabRecicla]
+    CTRL[:ControladorDepositos]
+    DEP[:Deposito]
+    VF[:ServicioFotoEvidencia]
+    CONT[:Contenedor]
+    CONS[:ConsolaAdministracion]
+    ALERT[:AlertaOperativa]
+    PL((:PersonalLogistico))
+
+    %% Enlaces
+    UA -- "1: registrarDeposito(5, material, foto) ▶<br>◀ 1.2: estado := Depósito en verificación" --- APP
+    
+    APP -- "1.1: procesarDeclaracion(5, material, foto) ▶<br>◀ 1.1.4: estado := Depósito en verificación" --- CTRL
+    
+    CTRL -- "1.1.1: crear() ▶<br>2.1: confirmarDeposito() ▶" --- DEP
+    
+    CTRL -- "1.1.2: evaluarFiltroFraude(5) ↺" --- CTRL
+    
+    CTRL -- "1.1.3: «asíncrono» verificarEvidenciaAsync(foto) ▶<br>◀ 2: «asíncrono» confirmacionVerificacion(OK)" --- VF
+    
+    CTRL -- "2.2: nuevoAcumulado := actualizarInventario(5) ▶" --- CONT
+    
+    CTRL -- "2.3: [nuevoAcumulado >= 30] dispararEventoAlerta(idContenedor, 'Vaciado') ▶" --- CONS
+    
+    CONS -- "2.3.1: crear() ▶" --- ALERT
+    
+    ALERT -- "2.3.2: notificarPersonal() ▶" --- PL
+
+    %% Estilos
+    classDef object fill:#f9f9f9,stroke:#333,stroke-width:2px;
+    class APP,CTRL,DEP,VF,CONT,CONS,ALERT object;

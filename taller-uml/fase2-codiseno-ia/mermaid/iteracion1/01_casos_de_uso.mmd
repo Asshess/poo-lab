@@ -1,0 +1,27 @@
+flowchart LR
+    %% Actores
+    U((Usuario No Autenticado))
+    UA((Usuario Autenticado))
+    PL((Personal Logístico))
+    
+    %% Generalización entre actores (Línea continua con etiqueta que la distingue)
+    UA -- "«generalization»" --> U
+
+    %% Frontera del sistema
+    subgraph Frontera [UcabRecicla Express]
+        UC1([Consultar contenedores activos])
+        UC2([Registrar declaración de depósito])
+        UC4([Generar reporte de fraude])
+        UC5([Verificar foto-evidencia])
+        UC7([Emitir alerta operativa de vaciado])
+    end
+
+    %% Asociaciones Actor - Caso de Uso (Líneas sin punta)
+    U --- UC1
+    UA --- UC2
+    PL --- UC7
+
+    %% Relaciones Include y Extend (usando comillas angulares y yendo hacia el caso base)
+    UC2 -. "«include»" .-> UC5
+    UC4 -. "«extend» <br> [cantidad > 10]" .-> UC2
+    UC7 -. "«extend» <br> [acumulado >= 30]" .-> UC2

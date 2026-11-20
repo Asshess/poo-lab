@@ -1,0 +1,77 @@
+sequenceDiagram
+    actor UA as :UsuarioAutenticado
+    participant APP as :AppUcabRecicla
+    participant CTRL as :ControladorDepositos
+    participant DEP as :Deposito
+    participant VF as :ServicioFotoEvidencia
+    participant CONT as :Contenedor
+    participant CONS as :ConsolaAdministracion
+    participant ALERT as :AlertaOperativa
+    actor PL as :PersonalLogistico
+
+    Note over UA, PL: Precondición: usuario autenticado, punto verde y contenedor activos, foto adjunta y acumulado previo del contenedor = 25.
+
+    UA->>APP: 1: registrarDeposito(5, material, foto)
+    activate APP
+    
+    APP->>CTRL: 1.1: procesarDeclaracion(5, material, foto)
+    activate CTRL
+    
+    CTRL->>DEP: 1.1.1: crear()
+    activate DEP
+    DEP-->>CTRL: (creado)
+    deactivate DEP
+    
+    %% Autollamada - Filtro Anti-Fraude
+    CTRL->>CTRL: 1.1.2: evaluarFiltroFraude(5)
+    Note right of CTRL: Cantidad válida (5 <= 10).
+    
+    %% Llamada Asíncrona
+    CTRL-)VF: 1.1.3: «asíncrono» verificarEvidenciaAsync(foto)
+    activate VF
+    Note right of CTRL: Llamada no bloqueante
+    
+    %% Retornos de estado
+    CTRL-->>APP: 1.1.4: estado := "Depósito en verificación"
+    deactivate CTRL
+    APP-->>UA: 1.2: "Evidencia enviada. Su depósito se está verificando."
+    deactivate APP
+
+    Note over VF, CTRL: Transcurren ~1,5 segundos
+    
+    %% Retorno Asíncrono
+    VF-)CTRL: 2: «asíncrono» confirmacionVerificacion(OK)
+    deactivate VF
+    activate CTRL
+    
+    CTRL->>DEP: 2.1: confirmarDeposito()
+    activate DEP
+    DEP-->>CTRL: (confirmado)
+    deactivate DEP
+    
+    CTRL->>CONT: 2.2: nuevoAcumulado := actualizarInventario(5)
+    activate CONT
+    CONT-->>CTRL: (retorna 30)
+    deactivate CONT
+    
+    %% Fragmento de control (Alerta)
+    opt [nuevoAcumulado >= 30]
+        CTRL->>CONS: 2.3: dispararEventoAlerta(idContenedor, "Vaciado Urgente")
+        activate CONS
+        
+        CONS->>ALERT: 2.3.1: crear()
+        activate ALERT
+        
+        ALERT->>PL: 2.3.2: notificarPersonal()
+        activate PL
+        PL-->>ALERT: (notificado)
+        deactivate PL
+        
+        ALERT-->>CONS: (creada)
+        deactivate ALERT
+        
+        CONS-->>CTRL: (alertaRegistrada)
+        deactivate CONS
+    end
+    
+    deactivate CTRL

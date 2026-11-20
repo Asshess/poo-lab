@@ -1,0 +1,51 @@
+sequenceDiagram
+    actor UA as Usuario Autenticado
+    participant APP as App UcabRecicla
+    participant CTRL as Controlador Depósitos
+    participant VF as Servicio FotoEvidencia
+    participant PV as Entidad PuntoVerde
+    participant CONS as Consola Administración
+
+    Note over UA, CONS: Precondición: Usuario autenticado, contenedor elegido, cantidad=5, límite contenedor=30.
+
+    UA->>APP: registrarDeposito(material, 5, foto)
+    activate APP
+    
+    APP->>CTRL: procesarDeclaracion(material, 5, foto)
+    activate CTRL
+    
+    %% Filtro Anti-Fraude (Síncrono)
+    CTRL->>CTRL: aplicarFiltroFraude(5)
+    Note right of CTRL: Cantidad válida (5 <= 10).<br>No se dispara reporte.
+    
+    %% Llamada Asíncrona
+    CTRL-)VF: verificarEvidenciaAsync(foto)
+    Note right of CTRL: Llamada no bloqueante
+    
+    CTRL-->>APP: estado: "Depósito en verificación"
+    deactivate CTRL
+    APP-->>UA: "Evidencia enviada. Su depósito se está verificando."
+    deactivate APP
+
+    %% Retorno Asíncrono después de 1.5s
+    Note over VF, CTRL: Transcurren ~1,5 segundos
+    activate VF
+    VF->>CTRL: confirmacionVerificacion(OK)
+    deactivate VF
+    activate CTRL
+    
+    %% Actualización de inventario
+    CTRL->>PV: sumarInventario(5)
+    activate PV
+    PV-->>CTRL: nuevoAcumulado = 30
+    deactivate PV
+    
+    %% Fragmento de control (Alerta)
+    opt nuevoAcumulado >= 30
+        CTRL->>CONS: dispararEventoAlerta(idPuntoVerde, "Vaciado Urgente")
+        activate CONS
+        CONS-->>CTRL: alertaRegistrada
+        deactivate CONS
+    end
+    
+    deactivate CTRL
